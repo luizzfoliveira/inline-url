@@ -1,0 +1,1 @@
+{handler clojure.core/identity}

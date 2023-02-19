@@ -1,0 +1,41 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin url="https://github.com/luizzfoliveira/inline-url-plugin">
+    <id>carvalhedo.inline-url</id>
+
+    <name>UrlInline</name>
+    <version>0.1.0</version>
+
+    <vendor url="https://github.com/luizzfoliveira/inline-url-plugin">Luiz Felipe Carvalhedo</vendor>
+
+    <description><![CDATA[
+    Plugin to show inline the full url from the vector of vectors used by Pedestal to build the routes of a service
+]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService
+                serviceImplementation="carvalhedo.inline_url.services.TogglePersistence"/>
+    </extensions>
+
+    <projectListeners>
+        <listener
+                class="carvalhedo.inline_url.listeners.FileOpenedListener"
+                topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+    </projectListeners>
+
+    <actions>
+        <group id="UrlInline" text="Search Url Plugin" description="Search Pedestal web routes">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action class="carvalhedo.inline_url.actions.SearchUrlAction" id="UrlInline.Actions.SearchUrlAction" text="Search"/>
+            <action class="carvalhedo.inline_url.actions.ToggleUrlInlineAction" id="UrlInline.Actions.ToggleUrlInlineAction" text="Toggle Url Inline Text"/>
+            <action class="carvalhedo.inline_url.actions.ChangePathAction" id="UrlInline.Actions.ChangePathAction" text="Change Url Path"/>
+
+<!--            Debug actions-->
+<!--            <action class="carvalhedo.inline_url.actions.SeeLineIndexAction" id="UrlInline.Actions.SeeLineIndexAction" text="See Index"/>-->
+<!--            <action class="carvalhedo.inline_url.actions.SeeStateAction" id="UrlInline.Actions.SeeStateAction" text="See State"/>-->
+        </group>
+    </actions>
+</idea-plugin>
