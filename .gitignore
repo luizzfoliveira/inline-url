@@ -6,6 +6,8 @@ build
 
 .idea
 
-*/test/*/resources
+*/test/*/resources/
 
 deps.edn
+
+.nrepl-port
