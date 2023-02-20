@@ -7,9 +7,8 @@ import carvalhedo.inline_url.services.TogglePersistence
 
 class ToggleUrlInlineAction: AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
-        val project = e.project
-        val service = project?.service<TogglePersistence>()
-        val state = service?.state
-        state?.toggleUrlInlay()
+        val service = service<TogglePersistence>()
+        val state = service.state
+        state.toggleUrlInlay()
     }
 }

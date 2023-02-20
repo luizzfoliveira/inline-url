@@ -12,7 +12,7 @@ class FileOpenedListener: FileEditorManagerListener {
     private var lineChangedListener: LineChangedListener? = null
 
     override fun fileOpened(source: FileEditorManager, file: VirtualFile) {
-        val state = source.project.service<TogglePersistence>().state
+        val state = service<TogglePersistence>().state
         if (state.isOn()){
             if (lineChangedListener === null) {
                 lineChangedListener = LineChangedListener()

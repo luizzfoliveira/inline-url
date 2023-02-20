@@ -16,18 +16,18 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <projectService
+        <applicationService
                 serviceImplementation="carvalhedo.inline_url.services.TogglePersistence"/>
     </extensions>
 
-    <projectListeners>
+    <applicationListeners>
         <listener
                 class="carvalhedo.inline_url.listeners.FileOpenedListener"
                 topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
-    </projectListeners>
+    </applicationListeners>
 
     <actions>
-        <group id="UrlInline" text="Search Url Plugin" description="Search Pedestal web routes">
+        <group id="UrlInline" text="Inline Url" description="Search Pedestal web routes">
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action class="carvalhedo.inline_url.actions.SearchUrlAction" id="UrlInline.Actions.SearchUrlAction" text="Search"/>
             <action class="carvalhedo.inline_url.actions.ToggleUrlInlineAction" id="UrlInline.Actions.ToggleUrlInlineAction" text="Toggle Url Inline Text"/>

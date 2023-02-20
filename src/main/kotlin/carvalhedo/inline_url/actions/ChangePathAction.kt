@@ -8,14 +8,11 @@ import carvalhedo.inline_url.services.TogglePersistence
 
 class ChangePathAction: AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
-        val project = e.project
-        val service = project?.service<TogglePersistence>()
-        val state = service?.state
-        if (state != null) {
-            val path: String? = Messages.showInputDialog(e.project, "Set Your Url Path\nUse Clojure-like vector of keywords\n(Ex.: [:a :b :routes])", "Set Path", Messages.getQuestionIcon(), state.path, null)
-            if (path != null) {
-                state.setUrlPath(path)
-            }
+        val service = service<TogglePersistence>()
+        val state = service.state
+        val path: String? = Messages.showInputDialog(e.project, "Set Your Url Path\nUse Clojure-like vector of keywords\n(Ex.: [:a :b :routes])", "Set Path", Messages.getQuestionIcon(), state.path, null)
+        if (path != null) {
+            state.setUrlPath(path)
         }
     }
 }
