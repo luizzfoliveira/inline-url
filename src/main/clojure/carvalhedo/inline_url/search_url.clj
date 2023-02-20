@@ -1,4 +1,4 @@
-(ns carvalhedo.inline-url.read-edn
+(ns carvalhedo.inline-url.search-url
   (:require [carvalhedo.inline-url.util :as util]
             [clojure.edn :as edn]
             [cheshire.core :as json]))
@@ -38,16 +38,13 @@
            (get-handler (util/get-children (first urls)) (rest url-as-vec)))
          (get-handler (rest urls) url-as-vec))))))
 
-(defn search-url
-  ([^String edn-content ^String url]
-   (search-url edn-content [:ig/system :pipo.module/web-routes :routes] url))
-  ([^String edn-content path ^String url]
-   (let [edn-as-map (-> (util/sanitize-edn edn-content)
-                        edn/read-string)
-         urls (get-in edn-as-map path)
-         url-as-vec (->> (clojure.string/split url #"/")
-                         rest
-                         (map #(str "/" %)))]
-     (-> (get-handler (first urls) url-as-vec)
-         json/generate-string))))
+(defn search-url [^String edn-content path ^String url]
+  (let [edn-as-map (-> (util/sanitize-edn edn-content)
+                       edn/read-string)
+        urls (get-in edn-as-map path)
+        url-as-vec (->> (clojure.string/split url #"/")
+                        rest
+                        (map #(str "/" %)))]
+    (-> (get-handler (first urls) url-as-vec)
+        json/generate-string)))
 
