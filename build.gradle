@@ -45,5 +45,22 @@ tasks.withType(Test) {
     useJUnitPlatform()
 }
 
+tasks {
+    patchPluginXml {
+        sinceBuild = "212"
+        untilBuild = "222.*"
+    }
+
+    signPlugin {
+        certificateChain = System.getenv("CERTIFICATE_CHAIN")
+        privateKey = System.getenv("PRIVATE_KEY")
+        password = System.getenv("PRIVATE_KEY_PASSWORD")
+    }
+
+    publishPlugin {
+        token = System.getenv("PUBLISH_TOKEN")
+    }
+}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
