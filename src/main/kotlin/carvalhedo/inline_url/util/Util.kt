@@ -6,8 +6,11 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.vfs.VirtualFile
 import carvalhedo.inline_url.actions.SearchUrlAction
 import carvalhedo.inline_url.services.LineIndexImpl
+import carvalhedo.inline_url.services.TogglePersistence
 import carvalhedo.inline_url.util.ClojureUtil.LINE_INDEXER_NS
 import carvalhedo.inline_url.util.ClojureUtil.READ_EDN_NS
+import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.ui.Messages
 
 internal object Util {
     fun buildLineIndexer(source: FileEditorManager, file: VirtualFile, urlPath: String) {
@@ -31,5 +34,15 @@ internal object Util {
         } finally {
             Thread.currentThread().contextClassLoader = oldLoader
         }
+    }
+
+    fun promptForUrlPath(e: AnActionEvent): String? {
+        val service = service<TogglePersistence>()
+        val state = service.state
+        val path: String? = Messages.showInputDialog(e.project, "Set Your Url Path\nUse Clojure-like vector of keywords\n(Ex.: [:a :b :routes])", "Set Path", Messages.getQuestionIcon(), state.path, null)
+        if (path != null) {
+            state.setUrlPath(path)
+        }
+        return path
     }
 }
