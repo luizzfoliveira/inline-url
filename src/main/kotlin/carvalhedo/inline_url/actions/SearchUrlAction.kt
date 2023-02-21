@@ -7,7 +7,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.ui.Messages
-import carvalhedo.inline_url.util.ClojureUtil.READ_EDN_NS
+import carvalhedo.inline_url.util.ClojureUtil.SEARCH_URL_NS
 import carvalhedo.inline_url.util.ClojureUtil.requireClojure
 import com.intellij.openapi.components.service
 
@@ -19,12 +19,12 @@ class SearchUrlAction: AnAction() {
             val loader = SearchUrlAction::class.java.classLoader
             Thread.currentThread().contextClassLoader = loader
 
-            requireClojure(READ_EDN_NS)
+            requireClojure(SEARCH_URL_NS)
 
             val vFile = e.getData(PlatformDataKeys.VIRTUAL_FILE)
             val fileName: String = vFile?.name as String
 
-            if(Clojure.`var`(READ_EDN_NS, "is-edn?").invoke(fileName) as Boolean) {
+            if(Clojure.`var`(SEARCH_URL_NS, "is-edn?").invoke(fileName) as Boolean) {
                 val path = service<TogglePersistence>().state.path
                 if (path.isEmpty()) {
                     Messages.showMessageDialog(e.project, "The path to the urls is not set yet", "Error", Messages.getInformationIcon())
@@ -32,7 +32,7 @@ class SearchUrlAction: AnAction() {
                     val fileContent: String = e.project?.let { FileEditorManager.getInstance(it).selectedTextEditor?.document?.text } as String
                     val url: String? = Messages.showInputDialog(e.project, "Url:", "Search Your Url", Messages.getQuestionIcon())
                     if (url != null) {
-                        val handlers: String = Clojure.`var`(READ_EDN_NS, "search-url").invoke(fileContent, path, url) as String
+                        val handlers: String = Clojure.`var`(SEARCH_URL_NS, "search-url").invoke(fileContent, path, url) as String
                         Messages.showMessageDialog(e.project, handlers, "Handlers For The Url", Messages.getInformationIcon())
                     }
                 }

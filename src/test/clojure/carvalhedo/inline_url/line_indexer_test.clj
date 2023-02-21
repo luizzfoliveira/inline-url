@@ -238,3 +238,21 @@
   (is (not (line-indexer/line-present-in-indexer? line-index "something/something/s.edn" 2)))
 
   (is (not (line-indexer/line-present-in-indexer? line-index "something/something/some.edn" 1))))
+
+(deftest should-check-that-it-is-a-clojure-coll-of-keywords
+  (is (line-indexer/valid-path? "[:a :b]"))
+
+  (is (line-indexer/valid-path? "(:a :b)")))
+
+(deftest should-check-that-it-is-not-clojure-coll-of-keywords
+  (is (not (line-indexer/valid-path? "[:a :b")))
+
+  (is (not (line-indexer/valid-path? "(:a :b")))
+
+  (is (not (line-indexer/valid-path? "[:a b]")))
+
+  (is (not (line-indexer/valid-path? "[a]")))
+
+  (is (not (line-indexer/valid-path? "")))
+
+  (is (not (line-indexer/valid-path? "[1 2 3]"))))

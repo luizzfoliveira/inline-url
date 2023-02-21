@@ -1,7 +1,8 @@
 (ns carvalhedo.inline-url.line-indexer
-  (:require [carvalhedo.inline-url.util :as util]
+  (:require [carvalhedo.inline-url.specs :as specs]
+            [carvalhedo.inline-url.util :as util]
             [clojure.edn :as edn]
-            [clojure.pprint]))
+            [clojure.spec.alpha :as s]))
 
 (defn get-line-number [url lines min-value]
   (-> (keep-indexed (fn [idx line]
@@ -61,3 +62,9 @@
 (defn line-present-in-indexer? [line-index ^String file-path ^Integer line]
   (let [line-index (get line-index file-path)]
     (contains? line-index line)))
+
+(defn valid-path? [^String url-path]
+  (try (let [url-clj (read-string url-path)]
+         (s/valid? ::specs/url-path url-clj))
+       (catch Exception _e
+         false)))

@@ -26,13 +26,16 @@ class LineChangedListener: CaretListener {
                 val loader = SearchUrlAction::class.java.classLoader
                 Thread.currentThread().contextClassLoader = loader
 
-                ClojureUtil.requireClojure(ClojureUtil.READ_EDN_NS)
+                ClojureUtil.requireClojure(ClojureUtil.SEARCH_URL_NS)
 
                 val project = event.editor.project as Project
 
-                if (hasLineChanged(event)) {
-                    val psiFile = PsiDocumentManager.getInstance(project).getPsiFile(event.editor.document)
-                    val vFile = psiFile!!.originalFile.virtualFile
+                val psiFile = PsiDocumentManager.getInstance(project).getPsiFile(event.editor.document)
+                val vFile = psiFile!!.originalFile.virtualFile
+
+                if (vFile.extension?.equals("edn") == true
+                        &&
+                        hasLineChanged(event)) {
                     val filePath = vFile.path
 
                     val editor = FileEditorManager.getInstance(project).selectedTextEditor
