@@ -12,7 +12,7 @@ plugins {
 }
 
 group = 'carvalhedo' // the group ID your artifacts should be published under
-version = '0.3.0' // the version your artifacts should be published under
+version = '0.2.0' // the version your artifacts should be published under
 
 repositories {
     mavenCentral()
