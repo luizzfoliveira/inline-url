@@ -39,9 +39,10 @@
          (get-handler (rest urls) url-as-vec))))))
 
 (defn search-url [^String edn-content path ^String url]
-  (let [edn-as-map (-> (util/sanitize-edn edn-content)
+  (let [path-as-vec (read-string path)
+        edn-as-map (-> (util/sanitize-edn edn-content)
                        edn/read-string)
-        urls (get-in edn-as-map path)
+        urls (get-in edn-as-map path-as-vec)
         url-as-vec (->> (clojure.string/split url #"/")
                         rest
                         (map #(str "/" %)))]

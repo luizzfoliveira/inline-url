@@ -109,11 +109,11 @@
         url-2 "/a"
         url-3 "/something/some-other/thing"]
     (is (= {"post" "some-handler"}
-           (json/parse-string (search-url/search-url edn-content [:a :b] url-1))))
+           (json/parse-string (search-url/search-url edn-content "[:a :b]" url-1))))
     (is (= {"post"   "some-handler"
             "get"    "other-handler"
             "put"    "some-other-handler"
             "delete" "last-handler"}
-           (json/parse-string (search-url/search-url edn-content [:a :b] url-2))))
+           (json/parse-string (search-url/search-url edn-content "[:a :b]" url-2))))
     (is (= {"post" "something"}
-           (json/parse-string (search-url/search-url edn-content-2 [:a :b] url-3))))))
+           (json/parse-string (search-url/search-url edn-content-2 "[:a :b]" url-3))))))
